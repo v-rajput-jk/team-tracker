@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<title>Mid Term Report - Team Performance Tracker</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+@page{size:A4;margin:3.5cm 1.25cm 1.25cm 3.5cm}
+body{font-family:'Times New Roman',Times,serif;font-size:12pt;line-height:1.5;color:#000;margin:3.5cm 1.25cm 1.25cm 3.5cm}
+.page{page-break-after:always;min-height:90vh}
+.cover{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;min-height:95vh;border:3px double #000;padding:40px}
+.cover h1{font-size:18pt;margin:10px 0}
+.cover h2{font-size:16pt;margin:8px 0}
+.cover h3{font-size:14pt;margin:6px 0;font-weight:normal}
+.cover .logo{font-size:48pt;margin-bottom:10px}
+.cover .line{width:60%;height:2px;background:#000;margin:15px auto}
+.roman{text-align:center;font-style:italic}
+h1{font-size:16pt;text-align:center;margin-top:30px}
+h2{font-size:14pt;margin-top:24px;border-bottom:1px solid #333;padding-bottom:4px}
+h3{font-size:13pt;margin-top:18px}
+p,li{text-align:justify;margin:6px 0}
+table{width:100%;border-collapse:collapse;margin:12px 0}
+th,td{border:1px solid #000;padding:6px 8px;text-align:left;font-size:11pt}
+th{background:#f0f0f0;font-weight:bold}
+.fig{text-align:center;margin:15px 0;font-style:italic;font-size:10pt}
+ul,ol{margin-left:20px}
+.footer{text-align:center;font-size:10pt;margin-top:40px;color:#555}
+
+/* ===== Download Toolbar ===== */
+.download-toolbar{
+  position:fixed;top:0;left:0;right:0;z-index:9999;
+  display:flex;align-items:center;justify-content:center;gap:12px;
+  padding:14px 24px;
+  background:rgba(15,23,42,0.92);
+  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  border-bottom:1px solid rgba(255,255,255,0.08);
+  box-shadow:0 4px 30px rgba(0,0,0,0.25);
+  font-family:'Inter',system-ui,sans-serif;
+}
+.download-toolbar .toolbar-label{
+  color:rgba(255,255,255,0.7);font-size:13px;font-weight:500;margin-right:8px;
+  display:flex;align-items:center;gap:6px;
+}
+.download-toolbar .toolbar-label svg{width:18px;height:18px;}
+.dl-btn{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:9px 20px;border:none;border-radius:8px;
+  font-family:'Inter',system-ui,sans-serif;font-size:13px;font-weight:600;
+  cursor:pointer;transition:all .2s ease;
+  text-decoration:none;
+}
+.dl-btn svg{width:16px;height:16px;flex-shrink:0;}
+.dl-btn-pdf{
+  background:linear-gradient(135deg,#ef4444,#dc2626);
+  color:#fff;box-shadow:0 2px 12px rgba(239,68,68,0.35);
+}
+.dl-btn-pdf:hover{transform:translateY(-1px);box-shadow:0 4px 20px rgba(239,68,68,0.5);}
+.dl-btn-word{
+  background:linear-gradient(135deg,#3b82f6,#2563eb);
+  color:#fff;box-shadow:0 2px 12px rgba(59,130,246,0.35);
+}
+.dl-btn-word:hover{transform:translateY(-1px);box-shadow:0 4px 20px rgba(59,130,246,0.5);}
+.dl-btn-html{
+  background:linear-gradient(135deg,#10b981,#059669);
+  color:#fff;box-shadow:0 2px 12px rgba(16,185,129,0.35);
+}
+.dl-btn-html:hover{transform:translateY(-1px);box-shadow:0 4px 20px rgba(16,185,129,0.5);}
+.dl-btn:active{transform:translateY(0) scale(0.97);}
+
+/* Push body content down so toolbar doesn't overlap */
+body{padding-top:62px;}
+
+/* Hide toolbar when printing */
+@media print{
+  .download-toolbar{display:none!important;}
+  body{padding-top:0!important;margin:3.5cm 1.25cm 1.25cm 3.5cm!important;}
+}
+</style>
+</head>
+<body>
+
+<!-- ===== DOWNLOAD TOOLBAR ===== -->
+<div class="download-toolbar" id="downloadToolbar">
+  <span class="toolbar-label">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3"/></svg>
+    Download Report
+  </span>
+  <button class="dl-btn dl-btn-pdf" onclick="downloadPDF()" title="Save as PDF using browser print">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H6.75S5.25 2.25 5.25 3.75v16.5c0 1.5 1.5 1.5 1.5 1.5h10.5c1.5 0 1.5-1.5 1.5-1.5v-.75"/></svg>
+    PDF
+  </button>
+  <button class="dl-btn dl-btn-word" onclick="downloadWord()" title="Download as Word document (.doc)">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H6.75S5.25 2.25 5.25 3.75v16.5c0 1.5 1.5 1.5 1.5 1.5h10.5c1.5 0 1.5-1.5 1.5-1.5v-.75"/></svg>
+    Word (.doc)
+  </button>
+  <button class="dl-btn dl-btn-html" onclick="downloadHTML()" title="Download as HTML file">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M17.25 6.75 22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3-4.5 16.5"/></svg>
+    HTML
+  </button>
+</div>
+
+
+<!-- PAGE 1: COVER PAGE -->
+<div class="page cover">
+<div class="logo">🎓</div>
+<h1>CT UNIVERSITY, LUDHIANA</h1>
+<h3>Department of Computer Science &amp; Engineering</h3>
+<div class="line"></div>
+<h2>MID TERM REPORT</h2>
+<h3>OF INDUSTRIAL TRAINING</h3>
+<div class="line"></div>
+<h1>Team Performance Tracker &amp; Management System</h1>
+<h3><em>An Intelligent Real-Time Workforce Analytics Dashboard with SharePoint Integration</em></h3>
+<div class="line"></div>
+<table style="width:70%;margin:20px auto;border:none">
+<tr><td style="border:none;text-align:right;width:40%"><strong>Submitted By:</strong></td><td style="border:none">[Student Name]</td></tr>
+<tr><td style="border:none;text-align:right"><strong>Roll Number:</strong></td><td style="border:none">[Roll Number]</td></tr>
+<tr><td style="border:none;text-align:right"><strong>Programme:</strong></td><td style="border:none">B.Tech (CSE)</td></tr>
+<tr><td style="border:none;text-align:right"><strong>Batch:</strong></td><td style="border:none">[2022–2026]</td></tr>
+<tr><td style="border:none;text-align:right"><strong>Training Supervisor:</strong></td><td style="border:none">[Supervisor Name]</td></tr>
+<tr><td style="border:none;text-align:right"><strong>Organisation:</strong></td><td style="border:none">[Company Name]</td></tr>
+</table>
+<div class="line"></div>
+<h3>Session: 2025–2026</h3>
+</div>
+
+<!-- PAGE 2: ABSTRACT -->
+<div class="page">
+<p class="roman">Page i</p>
+<h1>Abstract</h1>
+<p>The <strong>Team Performance Tracker &amp; Management System</strong> is an enterprise-grade, full-stack web application designed to provide real-time workforce analytics, task management, attendance monitoring, overtime tracking, and AI-driven performance insights for organisational team management. The system integrates directly with <strong>Microsoft SharePoint</strong> via the <strong>Microsoft Graph API</strong> using delegated authentication through <strong>MSAL (Microsoft Authentication Library)</strong>, enabling secure, seamless synchronisation of live organisational data.</p>
+
+<p>The front-end is built using <strong>React 19</strong> with <strong>TypeScript</strong>, leveraging <strong>Vite</strong> as the build tool for optimal development performance. The application features a modern, responsive UI with dark/light theme support, glassmorphism design elements, and smooth animations powered by <strong>Framer Motion</strong>. Data visualisation is handled through <strong>Recharts</strong>, providing interactive charts and analytics dashboards.</p>
+
+<p>The back-end is powered by <strong>Node.js</strong> with <strong>Express.js</strong>, serving as a secure proxy layer between the React client and Microsoft Graph API. It handles JWT token validation, CORS management, and all SharePoint CRUD operations including employee data retrieval, task/project management, attendance records, and overtime schedule updates.</p>
+
+<p>Key features include a <strong>Performance Orbit</strong> visualisation for real-time team momentum, an <strong>AI Executive Summary</strong> generator, a <strong>Leaderboard</strong> system with automated scoring algorithms, a comprehensive <strong>Schedule Management</strong> module, multi-language support, and PDF report generation capabilities. The system is designed to replace manual spreadsheet-based tracking with an automated, intelligent, and visually rich management dashboard.</p>
+</div>
+
+<!-- PAGE 3: WHAT IS ALREADY DONE -->
+<div class="page">
+<p class="roman">Page ii</p>
+<h1>What Is Already Done</h1>
+
+<h2>1. System Architecture &amp; Setup</h2>
+<p>The complete project architecture has been designed and implemented as a full-stack application with clear separation of concerns:</p>
+<ul>
+<li><strong>Front-End (React + TypeScript + Vite):</strong> Initialised with Vite build tool, React 19, TypeScript 6, and TailwindCSS 4 for styling. The React Compiler is enabled for optimised rendering.</li>
+<li><strong>Back-End (Node.js + Express):</strong> A RESTful API server running on port 5000, handling all Microsoft Graph API interactions securely.</li>
+<li><strong>Authentication (MSAL):</strong> Azure AD B2C integration with MSAL Browser and MSAL React for delegated OAuth 2.0 authentication flow.</li>
+</ul>
+
+<h2>2. Core Modules Completed</h2>
+
+<h3>2.1 Dashboard Module</h3>
+<p>A comprehensive analytics dashboard featuring six KPI cards (Total Members, Active Members, Tasks Today, Completed Tasks, In-Progress Tasks, and Team Efficiency), an interactive area chart for KPI performance trends, a Performance Orbit visualisation, and AI Smart Insights with proactive recommendations.</p>
+
+<h3>2.2 Task &amp; Project Management Module</h3>
+<p>Full CRUD operations for project tracking with fields including project name, allocated staff, status, start/end dates, folder links, and remarks. Supports real-time bi-directional sync with SharePoint's Project_Tracking_all list. Features include inline editing, status badges, priority indicators, and progress bars.</p>
+
+<h3>2.3 Attendance Management Module</h3>
+<p>Supports both standard and pivoted SharePoint data formats. Parses attendance statuses (Present, Absent, Late, Half-Day) and maps employee records via column-name decoding for SharePoint's internal hex-encoded field names.</p>
+
+<h3>2.4 Overtime &amp; Schedule Management Module</h3>
+<p>Real-time overtime tracking with editable schedule grids. Supports pivoted column formats where each date is a separate SharePoint column. Features include inline value editing with instant local state updates and background SharePoint PATCH operations.</p>
+
+<h3>2.5 Performance Analytics Module</h3>
+<p>Automated performance scoring algorithm considering task completion rate, attendance consistency, overtime patterns, and deadline adherence. Individual employee profile pages with detailed breakdowns.</p>
+
+<h3>2.6 Leaderboard System</h3>
+<p>Gamified ranking system with automated scoring, tier classifications (Top Tier, High Performer, etc.), and comparative analytics across all team members.</p>
+
+<h3>2.7 Authentication &amp; Security</h3>
+<p>Complete Microsoft Azure AD integration with MSAL for SSO. JWT token validation on the backend with JWKS verification. CORS policies restricting access to localhost origins during development. Authenticated and Unauthenticated route templates.</p>
+
+<h2>3. Reusable UI Component Library</h2>
+<table>
+<tr><th>Component</th><th>Purpose</th></tr>
+<tr><td>KPICard</td><td>Displays key performance indicator with trend data</td></tr>
+<tr><td>PerformanceOrbit</td><td>Animated orbital visualisation of team performance</td></tr>
+<tr><td>StatusBadge</td><td>Colour-coded status indicators</td></tr>
+<tr><td>PriorityBadge</td><td>Priority-level visual indicators</td></tr>
+<tr><td>ProgressBar</td><td>Animated progress indicators</td></tr>
+<tr><td>Modal</td><td>Reusable dialog/popup component</td></tr>
+<tr><td>FilterBar</td><td>Data filtering controls</td></tr>
+<tr><td>MemberReportModal</td><td>Detailed member analytics report generator</td></tr>
+<tr><td>Sidebar &amp; TopBar</td><td>Application navigation and layout</td></tr>
+</table>
+
+<h2>4. Backend API Endpoints Implemented</h2>
+<table>
+<tr><th>Endpoint</th><th>Method</th><th>Description</th></tr>
+<tr><td>/getEmployees</td><td>GET</td><td>Fetch team members from SharePoint</td></tr>
+<tr><td>/getTasks</td><td>GET</td><td>Fetch project/task data with fallback list names</td></tr>
+<tr><td>/getAttendance</td><td>GET</td><td>Fetch attendance with column metadata</td></tr>
+<tr><td>/getOvertime</td><td>GET</td><td>Fetch overtime records with column map</td></tr>
+<tr><td>/getLists</td><td>GET</td><td>List all SharePoint lists for debugging</td></tr>
+<tr><td>/updateOvertimeField</td><td>POST</td><td>Update individual overtime cell values</td></tr>
+<tr><td>/updateProjectFields</td><td>POST</td><td>Update task allocation, status, and remarks</td></tr>
+</table>
+
+<h2>5. Additional Features Completed</h2>
+<ul>
+<li><strong>Theme System:</strong> Dark/Light mode with CSS custom properties and smooth transitions.</li>
+<li><strong>Multi-Language Support:</strong> LanguageContext with internationalisation framework.</li>
+<li><strong>Toast Notifications:</strong> Real-time feedback system for user actions.</li>
+<li><strong>PDF Report Generation:</strong> Using jsPDF and html-to-image for executive summary exports.</li>
+<li><strong>Responsive Design:</strong> Mobile-first approach with adaptive grid layouts.</li>
+<li><strong>Data Context:</strong> Centralised state management with React Context API handling all SharePoint data synchronisation.</li>
+</ul>
+</div>
+
+<!-- PAGE 4: WHAT IS PLANNING -->
+<div class="page">
+<h1>What Is Planning</h1>
+
+<h2>1. Upcoming Feature Development</h2>
+
+<h3>1.1 Role-Based Access Control (RBAC)</h3>
+<p>Implementation of granular permission levels (Admin, Manager, Team Lead, Employee) to restrict module access and editing capabilities based on user roles fetched from Azure AD group memberships.</p>
+
+<h3>1.2 Real-Time Notifications &amp; Alerts</h3>
+<p>Integration of push notifications for task assignments, deadline reminders, attendance anomalies, and overtime threshold alerts using Web Socket connections or Server-Sent Events.</p>
+
+<h3>1.3 Advanced AI/ML Analytics</h3>
+<p>Incorporation of machine learning models for predictive analytics including burnout risk prediction, project delivery forecasting, optimal resource allocation recommendations, and automated workload balancing suggestions.</p>
+
+<h3>1.4 Leave Management Module</h3>
+<p>A dedicated leave application and approval workflow integrated with the existing attendance system. Features will include leave balance tracking, approval chains, and calendar integration.</p>
+
+<h3>1.5 Client Feedback Integration</h3>
+<p>A feedback collection module allowing clients to rate project deliverables, which feeds directly into the performance scoring algorithm for a more holistic evaluation.</p>
+
+<h3>1.6 Mobile Progressive Web App (PWA)</h3>
+<p>Converting the application into a PWA with offline capabilities, enabling field employees to log attendance and view schedules without constant internet connectivity.</p>
+
+<h2>2. Technical Improvements Planned</h2>
+<ul>
+<li><strong>Database Layer:</strong> Introduction of a local database (MongoDB/PostgreSQL) for caching SharePoint data, reducing API calls and improving response times.</li>
+<li><strong>Unit &amp; Integration Testing:</strong> Comprehensive test suite using Jest and React Testing Library to ensure reliability.</li>
+<li><strong>CI/CD Pipeline:</strong> Automated build, test, and deployment pipeline using GitHub Actions or Azure DevOps.</li>
+<li><strong>Production Deployment:</strong> Hosting on Azure App Service with proper environment configurations, SSL certificates, and domain mapping.</li>
+<li><strong>Error Monitoring:</strong> Integration of application monitoring tools (e.g., Sentry, Application Insights) for production error tracking.</li>
+</ul>
+
+<h2>3. Documentation &amp; Quality Assurance</h2>
+<ul>
+<li>API documentation using Swagger/OpenAPI specifications.</li>
+<li>User manual and administrator guide preparation.</li>
+<li>Security audit and vulnerability assessment.</li>
+<li>Performance benchmarking and load testing.</li>
+</ul>
+</div>
+
+<!-- PAGE 5: TIMELINES -->
+<div class="page">
+<h1>Timelines</h1>
+
+<h2>Project Development Timeline</h2>
+<table>
+<tr><th>Phase</th><th>Activity</th><th>Duration</th><th>Status</th></tr>
+<tr><td>Phase 1</td><td>Requirement Analysis &amp; System Design</td><td>Week 1–2 (Jan 2026)</td><td>✅ Completed</td></tr>
+<tr><td>Phase 2</td><td>Project Setup &amp; Architecture (React + Node.js + MSAL)</td><td>Week 3–4 (Jan 2026)</td><td>✅ Completed</td></tr>
+<tr><td>Phase 3</td><td>Authentication Module &amp; SharePoint Integration</td><td>Week 5–6 (Feb 2026)</td><td>✅ Completed</td></tr>
+<tr><td>Phase 4</td><td>Dashboard &amp; KPI Module Development</td><td>Week 7–8 (Feb 2026)</td><td>✅ Completed</td></tr>
+<tr><td>Phase 5</td><td>Task Management &amp; Attendance Modules</td><td>Week 9–10 (Mar 2026)</td><td>✅ Completed</td></tr>
+<tr><td>Phase 6</td><td>Overtime, Schedule &amp; Performance Modules</td><td>Week 11–13 (Mar–Apr 2026)</td><td>✅ Completed</td></tr>
+<tr><td>Phase 7</td><td>Leaderboard, Reports &amp; UI Polish</td><td>Week 14–16 (Apr 2026)</td><td>✅ Completed</td></tr>
+<tr><td>Phase 8</td><td>RBAC &amp; Leave Management Module</td><td>Week 17–19 (May 2026)</td><td>🔄 In Progress</td></tr>
+<tr><td>Phase 9</td><td>AI/ML Analytics &amp; Notifications</td><td>Week 20–22 (May–Jun 2026)</td><td>📋 Planned</td></tr>
+<tr><td>Phase 10</td><td>Testing, Deployment &amp; Documentation</td><td>Week 23–24 (Jun 2026)</td><td>📋 Planned</td></tr>
+</table>
+
+<h2>Gantt Chart Overview</h2>
+<table>
+<tr><th>Phase</th><th>Jan</th><th>Feb</th><th>Mar</th><th>Apr</th><th>May</th><th>Jun</th></tr>
+<tr><td>Requirement Analysis</td><td style="background:#4CAF50;color:#fff">████</td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td>Project Setup</td><td style="background:#4CAF50;color:#fff">████</td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td>Auth &amp; SharePoint</td><td></td><td style="background:#4CAF50;color:#fff">████</td><td></td><td></td><td></td><td></td></tr>
+<tr><td>Dashboard &amp; KPI</td><td></td><td style="background:#4CAF50;color:#fff">████</td><td></td><td></td><td></td><td></td></tr>
+<tr><td>Tasks &amp; Attendance</td><td></td><td></td><td style="background:#4CAF50;color:#fff">████</td><td></td><td></td><td></td></tr>
+<tr><td>OT &amp; Performance</td><td></td><td></td><td style="background:#4CAF50;color:#fff">██</td><td style="background:#4CAF50;color:#fff">██</td><td></td><td></td></tr>
+<tr><td>Leaderboard &amp; UI</td><td></td><td></td><td></td><td style="background:#4CAF50;color:#fff">████</td><td></td><td></td></tr>
+<tr><td>RBAC &amp; Leave</td><td></td><td></td><td></td><td></td><td style="background:#FFC107">████</td><td></td></tr>
+<tr><td>AI/ML &amp; Alerts</td><td></td><td></td><td></td><td></td><td style="background:#90CAF9">██</td><td style="background:#90CAF9">██</td></tr>
+<tr><td>Testing &amp; Deploy</td><td></td><td></td><td></td><td></td><td></td><td style="background:#90CAF9">████</td></tr>
+</table>
+<p><strong>Legend:</strong> 🟩 Completed &nbsp; 🟨 In Progress &nbsp; 🟦 Planned</p>
+</div>
+
+<!-- PAGE 6: REFERENCES -->
+<div class="page">
+<h1>References</h1>
+<ol>
+<li>React Documentation, "React 19 – The Library for Web and Native User Interfaces," Meta Platforms, 2026. [Online]. Available: https://react.dev/</li>
+<li>Microsoft, "Microsoft Graph API Documentation," Microsoft Corporation, 2026. [Online]. Available: https://learn.microsoft.com/en-us/graph/</li>
+<li>Microsoft, "Microsoft Authentication Library (MSAL) for JavaScript," 2026. [Online]. Available: https://github.com/AzureAD/microsoft-authentication-library-for-js</li>
+<li>Vite, "Vite – Next Generation Frontend Tooling," 2026. [Online]. Available: https://vitejs.dev/</li>
+<li>Express.js, "Express – Fast, Unopinionated, Minimalist Web Framework for Node.js," OpenJS Foundation, 2026. [Online]. Available: https://expressjs.com/</li>
+<li>Recharts, "Recharts – A Composable Charting Library Built on React Components," 2026. [Online]. Available: https://recharts.org/</li>
+<li>Framer, "Framer Motion – A Production-Ready Motion Library for React," Framer B.V., 2026. [Online]. Available: https://www.framer.com/motion/</li>
+<li>TailwindCSS, "Tailwind CSS – A Utility-First CSS Framework," Tailwind Labs, 2026. [Online]. Available: https://tailwindcss.com/</li>
+<li>Auth0 by Okta, "JSON Web Tokens – Introduction," 2026. [Online]. Available: https://jwt.io/introduction</li>
+<li>Node.js, "Node.js Documentation," OpenJS Foundation, 2026. [Online]. Available: https://nodejs.org/en/docs/</li>
+<li>TypeScript, "TypeScript – JavaScript with Syntax for Types," Microsoft, 2026. [Online]. Available: https://www.typescriptlang.org/</li>
+<li>R. S. Pressman, <em>Software Engineering: A Practitioner's Approach</em>, 9th ed., McGraw-Hill Education, 2020.</li>
+<li>A. S. Tanenbaum and M. Van Steen, <em>Distributed Systems: Principles and Paradigms</em>, 3rd ed., Pearson, 2017.</li>
+</ol>
+</div>
+
+<!-- PAGE 7: APPENDIXES -->
+<div class="page">
+<h1>Appendixes</h1>
+
+<h2>Appendix A: Technology Stack Summary</h2>
+<table>
+<tr><th>Layer</th><th>Technology</th><th>Version</th></tr>
+<tr><td>Front-End Framework</td><td>React</td><td>19.2.5</td></tr>
+<tr><td>Language</td><td>TypeScript</td><td>6.0.2</td></tr>
+<tr><td>Build Tool</td><td>Vite</td><td>8.0.10</td></tr>
+<tr><td>Styling</td><td>TailwindCSS</td><td>4.2.4</td></tr>
+<tr><td>Animation</td><td>Framer Motion</td><td>12.38.0</td></tr>
+<tr><td>Charts</td><td>Recharts</td><td>3.8.1</td></tr>
+<tr><td>Routing</td><td>React Router DOM</td><td>7.14.2</td></tr>
+<tr><td>Icons</td><td>Lucide React</td><td>1.11.0</td></tr>
+<tr><td>Back-End Runtime</td><td>Node.js</td><td>Latest LTS</td></tr>
+<tr><td>Back-End Framework</td><td>Express.js</td><td>5.2.1</td></tr>
+<tr><td>Authentication</td><td>MSAL Browser/React/Node</td><td>5.x</td></tr>
+<tr><td>HTTP Client</td><td>Axios</td><td>1.16.0</td></tr>
+<tr><td>PDF Generation</td><td>jsPDF + html-to-image</td><td>4.2.1 / 1.11.13</td></tr>
+</table>
+
+<h2>Appendix B: Project File Structure</h2>
+<pre style="font-size:10pt;background:#f5f5f5;padding:15px;border:1px solid #ddd">
+team-tracker/
+├── index.js                 # Express.js Backend Server
+├── index.html               # Entry HTML
+├── package.json             # Dependencies & Scripts
+├── vite.config.ts           # Vite Configuration
+├── auth.js                  # Auth Utilities
+├── msalConfig.js            # MSAL Configuration
+├── .env                     # Environment Variables
+├── src/
+│   ├── App.tsx              # Root Application Component
+│   ├── main.tsx             # React Entry Point
+│   ├── index.css            # Global Styles & Design Tokens
+│   ├── authConfig.ts        # MSAL Auth Configuration
+│   ├── context/
+│   │   ├── DataContext.tsx   # SharePoint Data Sync
+│   │   ├── ThemeContext.tsx  # Dark/Light Theme
+│   │   ├── UserContext.tsx   # User Session
+│   │   ├── ToastContext.tsx  # Notifications
+│   │   └── LanguageContext.tsx # i18n Support
+│   ├── pages/
+│   │   ├── Dashboard.tsx     # Main Analytics Dashboard
+│   │   ├── Tasks.tsx         # Project/Task Management
+│   │   ├── Attendance.tsx    # Attendance Tracking
+│   │   ├── Overtime.tsx      # Overtime Management
+│   │   ├── Schedule.tsx      # Schedule Planning
+│   │   ├── Performance.tsx   # Performance Analytics
+│   │   ├── Leaderboard.tsx   # Gamified Rankings
+│   │   ├── EmployeeProfile.tsx # Individual Profiles
+│   │   ├── ProfileSettings.tsx # User Settings
+│   │   └── LoginPage.tsx     # Authentication Page
+│   ├── components/
+│   │   ├── layout/           # Sidebar, TopBar, Layout
+│   │   └── shared/           # KPICard, Modal, Badges, etc.
+│   ├── data/
+│   │   └── mockData.ts       # Fallback/Mock Data
+│   └── types/                # TypeScript Interfaces
+</pre>
+
+<h2>Appendix C: System Architecture Diagram</h2>
+<pre style="font-size:10pt;background:#f5f5f5;padding:15px;border:1px solid #ddd;text-align:center">
+┌─────────────────────────────────────────────────────┐
+│                   CLIENT BROWSER                     │
+│  ┌───────────────────────────────────────────────┐  │
+│  │         React 19 + TypeScript + Vite          │  │
+│  │  ┌─────────┐ ┌──────────┐ ┌──────────────┐   │  │
+│  │  │Dashboard│ │  Tasks   │ │  Attendance   │   │  │
+│  │  └────┬────┘ └────┬─────┘ └──────┬───────┘   │  │
+│  │       └───────────┼──────────────┘            │  │
+│  │              DataContext (React Context)       │  │
+│  │                    │                           │  │
+│  │         MSAL Authentication (OAuth 2.0)       │  │
+│  └────────────────────┼──────────────────────────┘  │
+└───────────────────────┼──────────────────────────────┘
+                        │ REST API (Bearer Token)
+┌───────────────────────┼──────────────────────────────┐
+│              EXPRESS.JS BACKEND (Port 5000)           │
+│  ┌────────────────────┼──────────────────────────┐   │
+│  │    JWT Validation + CORS + Request Logging    │   │
+│  └────────────────────┼──────────────────────────┘   │
+│                       │                               │
+│              Microsoft Graph API v1.0                 │
+└───────────────────────┼──────────────────────────────┘
+                        │
+┌───────────────────────┼──────────────────────────────┐
+│           MICROSOFT SHAREPOINT ONLINE                │
+│  ┌────────────┐ ┌──────────┐ ┌───────────────────┐  │
+│  │Team Members│ │Attendence│ │Project_Tracking_all│  │
+│  └────────────┘ └──────────┘ └───────────────────┘  │
+│  ┌────────────┐                                      │
+│  │  Overtime  │                                      │
+│  └────────────┘                                      │
+└──────────────────────────────────────────────────────┘
+</pre>
+
+<div class="footer">
+<p><em>This report has been prepared in accordance with the CT University Mid Term Report format guidelines.</em></p>
+<p>© 2026 | CT University, Ludhiana | Department of Computer Science &amp; Engineering</p>
+</div>
+</div>
+
+<!-- ===== DOWNLOAD SCRIPTS ===== -->
+<script>
+  // Download as PDF via browser print dialog
+  function downloadPDF() {
+    window.print();
+  }
+
+  // Download as Word (.doc) — wraps the HTML content in a Word-compatible format
+  function downloadWord() {
+    const toolbar = document.getElementById('downloadToolbar');
+    toolbar.style.display = 'none';
+
+    const htmlContent = `
+      <html xmlns:o="urn:schemas-microsoft-com:office:office"
+            xmlns:w="urn:schemas-microsoft-com:office:word"
+            xmlns="http://www.w3.org/TR/REC-html40">
+      <head>
+        <meta charset="UTF-8">
+        <style>
+          @page { size: A4; margin: 3.5cm 1.25cm 1.25cm 3.5cm; }
+          body { font-family: 'Times New Roman', Times, serif; font-size: 12pt; line-height: 1.5; }
+          table { width: 100%; border-collapse: collapse; margin: 12px 0; }
+          th, td { border: 1px solid #000; padding: 6px 8px; font-size: 11pt; }
+          th { background: #f0f0f0; font-weight: bold; }
+          h1 { font-size: 16pt; text-align: center; }
+          h2 { font-size: 14pt; border-bottom: 1px solid #333; padding-bottom: 4px; }
+          h3 { font-size: 13pt; }
+          p, li { text-align: justify; }
+          pre { font-size: 10pt; background: #f5f5f5; padding: 15px; border: 1px solid #ddd; }
+        </style>
+      </head>
+      <body>
+        ${document.body.innerHTML}
+      </body>
+      </html>`;
+
+    const blob = new Blob(['\ufeff', htmlContent], { type: 'application/msword' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'MidTerm_Report_Team_Performance_Tracker.doc';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+
+    toolbar.style.display = 'flex';
+  }
+
+  // Download as HTML file
+  function downloadHTML() {
+    const toolbar = document.getElementById('downloadToolbar');
+    toolbar.style.display = 'none';
+
+    const htmlContent = document.documentElement.outerHTML;
+
+    toolbar.style.display = 'flex';
+
+    const blob = new Blob([htmlContent], { type: 'text/html;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'MidTerm_Report_Team_Performance_Tracker.html';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  }
+</script>
+
+</body>
+</html>

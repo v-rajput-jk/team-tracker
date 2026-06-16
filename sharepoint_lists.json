@@ -1,0 +1,37 @@
+[
+  {
+    "name": "Overtime",
+    "displayName": "Overtime",
+    "id": "5db901a7-943b-4f64-9f8c-66904a9dcdb0"
+  },
+  {
+    "name": "Project_Tracking_all",
+    "displayName": "Project_Tracking_all",
+    "id": "8273c628-5da7-46f0-9630-6deb8d961df3"
+  },
+  {
+    "name": "Attendence",
+    "displayName": "Attendence",
+    "id": "e309457c-92b0-4caf-9c6e-bacc50296b69"
+  },
+  {
+    "name": "Team Members",
+    "displayName": "Team Members",
+    "id": "b6de2bef-54ab-479a-aacd-c7f3b13894a6"
+  },
+  {
+    "name": "Shared Documents",
+    "displayName": "Documents",
+    "id": "16783556-b374-44fa-81ac-cb31cc355c78"
+  },
+  {
+    "name": "wte",
+    "displayName": "Web Template Extensions",
+    "id": "fec4c5a8-6694-445e-b00c-d57903bc1cd8"
+  },
+  {
+    "name": "Project_Tracking_closed",
+    "displayName": "Project_Tracking_closed",
+    "id": "639de6b8-76ea-40d1-82c7-dd4b66a2d744"
+  }
+]
